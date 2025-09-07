@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Developability of Triangle Meshes</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./acmsiggraph.css">
+  <style></style></head>
+  <body>
+    <h3>A note on preprocessing</h3>
+    <p>
+      This is a small guide on how to preprocess arbitrary meshes in order
+      to use them with our paper "Developability of Triangle Meshes".
+      A similar approach was used to preprocess the meshes for the results that
+      can be seen in Figures 3, 10, 21, 22, 24, 25.
+    </p>
+    <p>
+      The remeshing tool used is the research code belonging to the
+      paper <a href="https://igl.ethz.ch/projects/instant-meshes/">Instant Field-Aligned Meshes</a>, which can be found on <a href="https://github.com/wjakob/instant-meshes">this github page</a>.
+      Download the tool, compile it, start it, and load your mesh to be preprocessed.
+    </p>
+    <ol>
+      <li>Set the tool to "Remesh as" Triangles.</li>
+      <li>Enable "extrinsic" as well as "sharp creases", if applicable.</li>
+      <li>Set the "Target vertex count" to a number that produces a reasonably dense mesh.
+      Meshes that are not very dense are deformed more by the method, as can be seen in Fig. 27.
+      If you are not sure which target vertex count to pick, start with about 5000, and then adjust to more or less as needed.</li>
+      <li>Let the tool compute an orientation field.
+        If you want your mesh edges to be aligned along a specific direction (for example, a specific principal curvature direction), use the comb to align the orientation field with a specific direction.
+        Orientation fields aligned with the smaller curvature directions tend to produce great meshes for minimizing a developability energy.</li>
+      <li>Let the tool compute a position field.</li>
+      <li>Click on "Export mesh", and extract the mesh from the position field.</li>
+      <li>Sometimes the resulting mesh can have holes or non-manifold vertices.
+      Remove these in a mesh editor.</li>
+    </ol>
+
+
+
+</body></html>

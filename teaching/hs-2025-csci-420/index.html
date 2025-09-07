@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Computer Graphics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/images/cheeseman_favicon.ico"/>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1>
+									Computer Graphics
+									<br>
+									USC CSCI 420, fall semester 2025
+								</h1>
+								<p><span class="authorname">Oded Stein</span>, <span class="institution">University of Southern California</span></p>
+							</header>
+
+							<section class="teaser">
+								<figure>
+									<img src="./teaser.jpg" />
+								</figure>
+							</section>
+
+							<section class="abstract">
+								<h2>Course Description</h2>
+								<p>This course is an introduction to three-dimensional computer graphics. Students will learn both the theory of 3D computer graphics, and how to program it efficiently using OpenGL. The course primarily teaches the "modern" shader-based OpenGL (core profile), but also introduces the "classic" fixed-function OpenGL (compatibility profile). Topics include 2D and 3D transformations, Bézier and B-Spline curves for geometric modeling, interactive 3D graphics programming, computer animation and kinematics, and computer graphics rendering including ray tracing, shading and lighting. There will be an emphasis on the mathematical and geometric aspects of computer graphics.
+								</p>
+							</section>
+							<section class="comments">
+								<h2>Hours</h2>
+								<p>Lectures: Monday & Wednesday, 15:30-17:20, WPH 102</p>
+							    <p>Office hours with professor: Tuesday 14:00-15:00, GCS 202N (send email to be let up to floor 2 of Ginsburg Hall)</p>
+								<br><br>
+								<ul><li><a href="./syllabus.pdf">Syllabus</a></li></ul>
+								<ul><li><a href="https://piazza.com/usc/fall2025/20253_30230_1">Piazza (course discussion)</a>
+							</section>
+
+							<section class="comments">
+								<h2>Course Schedule</h2>
+
+								<table>							
+							    <colgroup>
+							       <col span="1" style="width:10%;white-space:normal;">
+							       <col span="1" style="width:35%;white-space:normal;">
+							       <col span="1" style="width:15%;white-space:normal;">
+							       <col span="1" style="width:20%;white-space:normal;">
+							       <col span="1" style="width:20%;white-space:normal;">
+							    </colgroup>
+
+								<thead>
+								  <tr>
+								    <th></th>
+								    <th><h4>Topic</h4></th>
+								    <th><h4>Readings (Angel)</h4></th>
+								    <th><h4>Slides</h4></th>
+								    <th><h4>Assignments</h4></th>
+								  </tr></thead>
+								<tbody>
+								  <tr>
+								    <td><span style="font-weight:bold;">Aug 25</span></td>
+								    <td>What is Computer Graphics?</td>
+								    <td>Ch. 1</td>
+								    <td><a href="01-overview.pdf">01-overview</a></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Aug 27</span></td>
+								    <td>Introduction to OpenGL</td>
+								    <td>Ch. 2</td>
+								    <td><a href="02-introduction.pdf">02-introduction</a></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 1</span></td>
+								    <td>No Class (Labor Day)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 3</span></td>
+								    <td>Graphics Pipeline</td>
+								    <td>Ch. 2</td>
+								    <td><a href="03-pipeline.pdf">03-pipeline</a></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 8</span></td>
+								    <td>Color and Hidden Surface Removal</td>
+								    <td>Ch. 2</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 10</span></td>
+								    <td>Transformations</td>
+								    <td>Ch. 3</td>
+								    <td></td>
+								    <td>Example OpenGL code</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 15</span></td>
+								    <td>Viewing and Projection</td>
+								    <td>Ch. 4</td>
+								    <td></td>
+								    <td>Assignment 1 released</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 17</span></td>
+								    <td>Shaders</td>
+								    <td>Chs. 1&2, App. A</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 22</span></td>
+								    <td>Shaders & HW1 discussion</td>
+								    <td>Chs. 1&2, App. A</td>
+								    <td>hw1-helper</td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 24</span></td>
+								    <td>No class (religious holiday)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Sep 29</span></td>
+								    <td>Hierarchical Modeling</td>
+								    <td>Ch. 8</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 1</span></td>
+								    <td>Polygon Meshes, Curves and Surfaces</td>
+								    <td>Ch. 10</td>
+								    <td></td>
+								    <td>Assignment 1 due</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 6</span></td>
+								    <td>Lighting & Shading</td>
+								    <td>Ch. 5</td>
+								    <td>hw2-helper</td>
+								    <td>Assignment 2 out</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 8</span></td>
+								    <td>No class (religious holiday)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 13</span></td>
+								    <td>No class (religious holiday)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 15</span></td>
+								    <td>No class (religious holiday)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 20</span></td>
+								    <td>Texture Mapping</td>
+								    <td>Ch. 2</td>
+								    <td></td>
+								    <td>Assignment 2 first milestone due</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 22</span></td>
+								    <td>Midterm exam (in-class)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 27</span></td>
+								    <td>Rasterization</td>
+								    <td>Ch. 6</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Oct 29</span></td>
+								    <td>Raytracing: Introduction</td>
+								    <td>Ch. 11</td>
+								    <td></td>
+								    <td>Assignment 2 due</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 3</span></td>
+								    <td>Raytracing: Geometric Queries</td>
+								    <td>Ch. 11</td>
+								    <td></td>
+								    <td>Assignment 2 due</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 5</span></td>
+								    <td>Spatial Data Structures & HW3 discussion</td>
+								    <td>Ch. 8</td>
+								    <td></td>
+								    <td>Assignment 3 out</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 10</span></td>
+								    <td>No Class (Veteran's day)</td>
+								    <td>Ch. 11</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 12</span></td>
+								    <td>Keyframe Animation</td>
+								    <td>Ch. 9</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 17</span></td>
+								    <td>Image Processing</td>
+								    <td>Chs. 6&7</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 19</span></td>
+								    <td>Physical Simulation</td>
+								    <td>Ch. 9</td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 24</span></td>
+								    <td>Non-photorealistic rendering</td>
+								    <td>Ch. 9</td>
+								    <td></td>
+								    <td>Assignment 3 due</td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Nov 26</span></td>
+								    <td>No class (Thanksgiving)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Dec 1</span></td>
+								    <td>Final prep</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								  <tr>
+								    <td><span style="font-weight:bold;">Dec 3</span></td>
+								    <td>Final (in-class)</td>
+								    <td></td>
+								    <td></td>
+								    <td></td>
+								  </tr>
+								</tbody>
+								</table>
+							</section>
+
+							<section class="comments">
+								<h2>Prerequisites</h2>
+								<ul>
+									<li>Junior, senior, MS or PhD student, or explicit permission of instructor</li>
+									<li>CSCI 104 (Data Structures and Object-Oriented Design)</li>
+									<li>MATH 225 (Linear Algebra and Differential Equations) or similar</li>
+									<li>Familiarity with calculus and linear algebra</li>
+									<li>C/C++ programming skills</li>
+								</ul>
+							</section>
+
+							<section class="links">
+								<h2>Reading Material</h2>
+								<p>The following textbooks are strongly recommended (especially the first one), but not absolutely required:</p>
+								<ul>
+									<li>Edward Angel: Interactive Computer Graphics: A Top-Down Approach Using OpenGL, Sixth edition, Publisher: Addison Wesley, ISBN: 9780321535863</li>
+									<li>Dave Shreiner: OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 4.3, Eighth edition, Publisher: Addison-Wesley Professional, ISBN: 9780321773036</li>
+								</ul>
+							</section>
+
+							<section class="comments">
+								<h2>Description of Assignments and How They Will Be Assessed</h2>
+								<p>There will be three programming homework assignments, teaching students OpenGL and how to program 3D computer graphics. Please see the schedule for links to assignments and due dates. All assignments must be done individually.</p>
+
+								<p>Grading breakdown:</p>
+								<ul>
+									<li>Assignments (17% each)</li>
+									<li>Midterm exam (19%)</li>
+									<li>Final exam (30%)</li>
+								</ul>
+
+								<p><span style="font-weight:bold;">All assignments must be completed before the final exam to pass the course. Students must take the mid-term and final exams to pass the course.</span>
+								The assignments will have a small amount of extra credit.</p>
+							</section>
+
+							<section class="comments">
+								<h2>Assignment Submission & Late Policy</h2>
+								<p>Assignments are submitted online through Blackboard / Brightspace.</p>
+								<p>Programming assignments should be turned in by midnight on the day they are due. A total of three late days may be taken during the semester on programming assignments. For example, you can use one late day on the second assignment, and two on the third assignment. All days are counted, including any weekends and holidays, as follows: Less than 24 hours late = 1 late day, 24-48 hours late = 2 late days, 48-72 hours late = 3 late days, and so on. The flexibility provided by the late days is intended to get you through the time where all your classes just happen to have assignments due on the same day. Beyond the three late days, there will be a penalty of 10% of the value of the assignment / day. Exceptions will be granted only under most dire circumstances and must be discussed with and approved by the instructor at least one week in advance. Assignment and exam grading may be discussed within three weeks of them being returned to the students.</p>
+							</section>
+
+							<section class="comments">
+								<h2>Forum</h2>
+								<p>There will be a forum on Piazza where students can ask questions.</p>
+							</section>
+
+							<section class="comments">
+								<h2>Academic integrity</h2>
+								<p>Please see <a href="./academic-integrity.pdf">this PDF</a> for the course's academic integrity policy.</p>
+
+								<p>Please especially note the policy on the use of generative AI in this course:
+								<span style="font-weight:bold;">Generative AI is not permitted.</span>
+							    Since creating, analytical, and critical thinking skills are part of the learning outcomes of this course, all assignments should be prepared by the student working individually or in groups as described on each assignment. Students may not have another person or entity complete any portion of the assignment. Developing strong competencies in these areas will prepare you for a competitive workplace. Therefore, using AI-generated tools is prohibited in this course, will be identified as plagiarism, and will be reported to the Office of Academic Integrity.</p>
+							</section>
+
+							<section class="acknowledgements">
+								<h2>Acknowledgements</h2>
+								<p>I wish to thank Prof. Jernej Barbic, who has taught this course in the past and has graciously granted me access to his course materials.
+								Thank also goes to Prof. Frank Pfenning and Prof. Jessica Hodgins from Carnegie Mellon University for generously providing materials from their computer graphics courses at CMU. This course has also been influenced by computer graphics courses at Cornell, MIT and UC Berkeley.</p>
+							</section>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer>
+						<div class="inner">
+						<!-- Logo -->
+							<p><a href="https://odedstein.com" class="logo">
+								<span class="symbol"><img src="./assets/images/cheeseman_small.png" /></span>
+								Oded Stein</a>
+							</p>
+							<p class="copyright">Based on the <a href="https://html5up.net/phantom">Phantom</a> <a href="https://html5up.net">HTML5Up</a> template, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

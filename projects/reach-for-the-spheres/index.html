@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Reach For the Spheres: Tangency-Aware Surface Reconstruction of SDFs</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/images/cheeseman_favicon.ico"/>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1><em>Reach For the Spheres</em>:
+									<br>
+									Tangency-Aware Surface Reconstruction of SDFs</h1>
+								<p class="venue">SIGGRAPH Asia 2023</p>
+
+								<p><span class="authorname">Silvia Sellán</span>, <span class="institution">University of Toronto</span></p>
+								<p><span class="authorname">Christopher Batty</span>, <span class="institution">University of Waterloo</span></p>
+								<p><span class="authorname">Oded Stein</span>, <span class="institution">University of Southern California</span></p>
+							</header>
+
+							<section class="teaser">
+								<figure>
+									<img src="teaser.jpg" />
+									<figcaption><span class="emph">Figure 1.</span>
+										Reconstructing a mesh from the discrete signed distance field (SDF) of a koala (source, <em>rightmost</em>).
+										By using global information from all sample points at once, our method recovers the shape even in low resolutions where methods like Marching Cubes and Neural Dual Contouring (NDCx) produce very coarse shapes (<em>left trio</em>), and it recovers surface detail at higher resolutions that Marching Cubes and NDCx miss (<em>middle trio</em>).
+										Our method is purely geometric, and does not require any training or storing of weights (unlike NDCx).</figcaption>
+								</figure>
+							</section>
+
+							<section class="abstract">
+								<h2>Abstract</h2>
+								<p>
+									Signed distance fields (SDFs) are a widely used implicit surface representation, with broad applications in computer graphics, computer vision, and applied mathematics. To reconstruct an explicit triangle mesh surface corresponding to an SDF, traditional isosurfacing methods, such as Marching Cubes and and its variants, are typically used. However, these methods overlook fundamental properties of SDFs, resulting in reconstructions that exhibit severe oversmoothing and feature loss. To address this shortcoming, we propose a novel method based on a key insight: each SDF sample corresponds to a spherical region that must lie fully inside or outside the surface, depending on its sign, and that must be tangent to the surface at some point. Leveraging this understanding, we formulate an energy that gauges the degree of violation of tangency constraints by a proposed surface. We then employ a gradient flow that minimizes our energy, starting from an initial triangle mesh that encapsulates the surface. This algorithm yields superior reconstructions to previous methods, even with sparsely sampled SDFs. Our approach provides a more nuanced understanding of SDFs and offers significant improvements in surface reconstruction.
+								</p>
+							</section>
+
+							<section class="links">
+								<h2>Links</h2>
+								<ul>
+									<li><a href="https://dl.acm.org/doi/10.1145/3610548.3618196">ACM Library</a></li>
+									<li><a href="https://arxiv.org/abs/2308.09813">arXiv</a></li>
+							    	<li><a href="./reach-for-the-spheres.pdf">paper preprint</a></li>
+							    	<li><a href="./reach-for-the-spheres_compressed.pdf">paper preprint (compressed)</a></li>
+							    	<li><a href="https://github.com/sgsellan/reach-for-the-spheres/">Code</a></li>
+							    </ul>
+							</section>
+
+							<!-- <section class="comments">
+								<h2>Comments</h2>
+								<p></p>
+							</section> -->
+
+							<!-- <section class="video">
+								<h2>Video</h2>
+							</section> -->
+
+							<section class="bib">
+								<h2>Cite as</h2>
+<pre><code>@inproceedings{Sellan2023RFTS,
+author = {Sell\'{a}n, Silvia and Batty, Christopher and Stein, Oded},
+title = {Reach For the Spheres: Tangency-aware surface reconstruction of SDFs},
+year = {2023},
+booktitle = {SIGGRAPH Asia 2023 Conference Papers},
+articleno = {73},
+numpages = {11}
+}</code></pre>
+							</section> 
+
+							<section class="acknowledgements">
+								<h2>Acknowledgements</h2>
+								<p>This work is funded in part by the Natural Sciences and Engineering Research Council of Canada (Grant RGPIN-2021-02524), an NSERC Vanier Scholarship and an Adobe Research Fellowship.</p>
+
+								<p>We thank Abhishek Madan for technical help and for proofreading.
+								We thank Aravind Ramakrishnan, and Hsueh-Ti Derek Liu for proofreading.
+								The first author would also like to thank the second and third authors for inviting her to visit their respective institutions, which served as the foundation for this collaboration.</p>
+
+								<p>We acknowledge the authors of the 3D models used throughout this paper and thank them for making them available for academic use.
+								See the paper for a detailed list.</p>
+							</section>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer>
+						<div class="inner">
+						<!-- Logo -->
+							<p><a href="https://odedstein.com" class="logo">
+								<span class="symbol"><img src="./assets/images/cheeseman_small.png" /></span>
+								Oded Stein</a>
+							</p>
+							<p class="copyright">Based on the <a href="https://html5up.net/phantom">Phantom</a> <a href="https://html5up.net">HTML5Up</a> template, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

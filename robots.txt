@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: *.pdf
+Disallow: *.png
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.html
+Disallow: *.zip
+
+User-agent: Googlebot-Image
+Disallow: /

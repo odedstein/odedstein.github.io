@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://barbic.usc.edu/cs420-s21/assign3/index.html -->
+<html>
+
+<!-- Mirrored from viterbi-web.usc.edu/~jbarbic/cs420-s24/assign3/extension/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jul 2024 06:08:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>CSCI 420 Programming Assignment 3: Ray Tracing</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container-lg">
+    <h1>CSCI 420 Programming Assignment 3 Extra Credit:<br>Monte-Carlo sampling</h1>
+
+    <h2>Overview </h2>
+    <p>In this extra credit, you will implement a simple Monte-Carlo algorithm to enhance 
+      the rendering of the objects in your scene.
+      Different to the core requirements of homework 3, the materials of the scene objects 
+      will be described by BRDF functions. In addition, all the light sources will be area lights.</p>
+
+    <h2>Step 1: Shoot more camera rays</h2>
+    <p>
+       In the core credit for hw3, we shoot rays through the center of the pixel.
+       In this credit, you need to sample N random rays, each going through a random location
+       in the pixel. You can improve this using <i>stratified sampling:</i> subdivide the pixel
+       into a regular grid of subpixels, then shoot a random ray through each subpixel.
+       Another approach is to use a sampling method such as the
+       <a href="https://en.wikipedia.org/wiki/Halton_sequence">Halton Sequence.</a>
+    </p>
+
+    <p>For each sampled ray for a pixel, we find the intersection point with the scene, 
+      and evaluate the ray color C_i, using the technique described below.
+      Then, the final color of this pixel is <code>1/N sum_i C_i</code>, where N is the number of sampled rays.
+    </p>
+
+    <h2>Step 2: Compute the color for each ray using BRDF</h2>
+
+    <p>Let the intersection point of the primary ray with the scene be p.
+      Denote the normal at p by n, the outgoing direction (eye direction, i.e., direction to the camera) by w_o,
+      and the incoming direction (light direction) by w_i.
+      The color C_i of this ray d_i is computed by</p>
+    <pre><code>
+      C_i = Le * f(p, w_i, w_o) * (w_i . n) / pdf,
+    </code></pre>
+    <p>where f is the BRDF function,
+      Le is the light color, 
+      (w_i . n) is the dot product between w_i and n, 
+      and pdf is the probability of the direction w_i.
+      The following diagram illustrates the computation of C_i:</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <img src="model.png" style="width:100%">
+        <p>Overview</p>
+      </div>
+      <div class="col-sm">
+      
+      </div>
+    </div>
+    <p><b>Obtaining w_i:</b> 
+      We do this by sampling the light source. 
+      Note that light sources are area lights, namely they are rectangles.
+      We randomly select a point p_l on the light source.
+      Then, the light direction is w_i = normalize(p_l - p).
+      The same procedure is repeated for each light source.
+    </p>
+    <p><b>Obtaining Le:</b> After w_i has been selected, you need to shoot a ray
+      from p to p_l to check whether it is blocked by any objects in the scene.
+      This is the same shadow ray computation as in the rest of the homework.
+      If the shadow ray is blocked, then Le = 0. 
+      In addition, you should also check whether (w_i . n) is less or equal to zero; if yes, again, Le = 0.
+      Otherwise, set Le to the color of the light.
+    </p>
+
+    <p><b>Obtaining pdf:</b> The probability density function (pdf) of w_i is determined as follows.
+      Because the light point was drawn at random on the area light, the unscaled pdf has a constant value of
+      1 / totalLightArea everywhere on the light source.
+      However, we need to correct this for the fact that different parts of the area light are at a different
+      distance to p, and the angle to the normal also affects the pdf, 
+      pdf = ||p-p_l||^2 / (|(n_light. w_i)| * totalLightArea), where n_light is the normal of the area light.
+    </p>
+
+    <p><b>Evaluating the BRDF:</b> We assume that the BRDF is parameterized by four material optical parameters:
+    albedo, F0, roughness and metalness. Then, f is defined as follows:</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <img src="brdf1.png" style="width:100%">.
+      </div>
+      <div class="col-sm">      
+      </div>
+    </div>
+    <p>Here, &alpha; = roughness * roughness, h = sign(w_i . n) * normalize(w_i + w_o),
+    &chi;+(t) is the positive characteristic function (which equals one if t > 0 and zero if t <= 0),
+    &theta;_v is the angle between v and n, and &theta;_m is the angle between m and n.</p>
+    <p>This completes the description of how to evaluate C_i. 
+       Don't forget to add up the colors of all sampled rays.</p>
+
+    <h2>Details and FAQ</h2>
+
+    <h4>Generating uniformly distributed random numbers between 0 and 1</h4>
+
+    <p>In c++ 11, you can do</p>
+    <pre><code>
+      #include &lt;random&gt;
+
+      std::random_device rd;
+      std::mt19937 eng;  // or eng(r()); for non-deterministic random number
+      std::uniform_real_distribution&lt;double&gt; distrib(0.0, 1.0 - 1e-8);
+
+      randomNumber = distrib(eng);
+    </code></pre>
+    <p> to generate a random number between 0 and 1. To generate the next random number, call <code>distrib(eng)</code> again.</p>
+
+    <h4>Randomly sampling a light point p_l</h4>
+
+    <p> All lights in this homework have the same area and they are all rectangular.
+    Denote the corner points as p0, p1, p2, p3.</p>
+    <pre><code>
+      double U1, U2, U3; // a random number obtained from above.
+      int n; // #lights
+      int sampledLightID = (int)std::min((int)(n * U1), n - 1);
+
+      p0 = lights[sampledLightID].p0;
+      p1 = lights[sampledLightID].p1;
+      p2 = lights[sampledLightID].p2;
+      p3 = lights[sampledLightID].p3;
+      p = (1- U2) * (p0 * (1- U3) + p1 * U3) + U2 * (p2 * (1- U3) + p3 * U3) // sample point p_l
+
+      // The corners of the area light are defined as follows.
+      // p0 ------- p1
+      //  |          |
+      //  |          |
+      // p2 ------- p3
+    </code></pre>
+
+    <h4>Understanding the material attributes</h4>
+
+    <p>Albedo is the base color of the object.
+      F0 determines what fraction of the light the object reflects 
+      when the light hits the object in a direction aligned with the object's normal 
+      (this is called "base reflection").
+      Metalness describes where the object is on a scale between 
+      a dielectric (non-conductive material such as plastic, wood, ceramic, glass, leather, ...) or a 
+      conductive material such as metal.
+      Roughness describes how rough vs smooth the surface of the object is.
+      Here is an image showing the effect of tuning roughness and metallic properties, 
+      under a fixed F0 and albedo.
+    </p>
+    <p><img src="all-ball.png" style="width:50%"></p>
+    <p></p>
+
+    <h4>Loading the optical materials and area lights</h4>
+
+    <p>In order to specify the optical material properties, we extended the .scene file format and the parser.</a>
+    Here is the extended <a href="parser.cpp">.cpp</a> source file.  Please merge it to your code as needed.
+    Here are the augmented scene files:</p>
+    <p><a href="test2.html">test2.scene</a> | <a href="test2-solution.png">result</a> (100 spp, fov=60, 640x480)</p>
+    <p><a href="snow-man.html">snow-man.scene</a> | <a href="snow-man-solution.png">result</a> (100 spp, fov=50, 640x480)</p>
+    <p><a href="4sphere.html">4sphere.scene</a> | <a href="4sphere-solution.png">result</a> (100 spp, fov=40, 640x480)</p>
+    <p><a href="siggraph.html">siggraph.scene</a> | <a href="siggraph-solution.png">result</a> (100 spp, fov=60, 640x480)</p>
+    <p><a href="table.html">table.scene</a> | <a href="table-solution.png">result</a> (100 spp, fov=50, 800x450)</p>
+
+    <h4>Apply tone mapping to final pixels</h4>
+
+    <p> You should transform the final color C of each pixel by
+    C = C / (C + 1) before saving the image to disk or displaying it on screen.
+    In this way, you guarantee that the values of the final color are between 0 and 1.
+    More about tone mapping is <a href="https://en.wikipedia.org/wiki/Tone_mapping">here.</a>
+    </p>
+
+    <h4>Progressive output visualization</h4>
+
+    <p>For each pixel, we sample multiple rays, so a direct implementation is</p>
+
+    <pre><code>
+      for each pixel p(x, y):
+        color(x, y) = 0
+        for each sample s_i in pixel p(x, y):
+          color(x, y) += color for s_i
+        color(x, y) /= n
+      save final color to image
+    </code></pre>
+
+    <p>A more interesting way to do it is</p>
+    <pre><code>
+      for each pixel p(x, u):
+        color(x, y) = 0
+      for i = 1...n:
+        for each pixel p(x, y):
+          color(x, y) += color for s_i
+        save the intermediate image to a file
+      save final image to a file
+    </code></pre>
+
+    <p>By doing so, you will see how the amount of noise decreases as you add more samples.
+      Here is an example video to illustrate this.</p>
+    <video width="50%" controls>
+    <source src="pass.mp4" type="video/mp4"> 
+    </video>  
+
+    <h2>Extra extra credit</h2>
+
+    <h4>Multi-threading</h4>
+
+    <p>The computations of the color for each pixel are independent of each other. 
+      Therefore, multithreading can dramatically improve the performance.
+      It can be done using STL threading (<code>std::thread</code>), or by
+      using 3rd-party libraries such as Intel TBB.</p>
+
+<!--
+    <h4>A better sampling method for w_i</h4>
+    <p>As you can see, there are some artifacts on the highlight of the glossy green sphere in the image below.
+    The specular highlights are noisy. This is because a randomly sampled light direction may not corresponds to a high BRDF value,
+    especially when the roughness of the surface is low.</p>
+    <p><img src="cc2.png"></p>
+    <p>To solve the problem, we need to sample both the BRDF function and light sources at the same time.
+    Recall the equation above.</p>
+    <pre><code> C_i = Le f(p, w_i, w_o) * (w_i . n) / pdf</code></pre>
+    <p>We now change it to</p>
+    <pre><code> C_i = Le (f(p, w_i, w_o) * (w_i . n) * t_l / pdf_l + f(p, w_i', w_o) * (w_i' . n) * t_b / pdf_b'),</code></pre>
+    <p>where w_i, which is the same as it above, the light sampling direction, t_l is a scalar weight, 
+      pdf_l is the probability of the light sampling direction w_i,
+      w_i' is the BRDF sampling direction, t_b is another scalar weight, 
+    pdf_b is the probability of the BRDF sampling direction w_i'.</p>
+    <p><b>Sample BRDF direction w_i':</b> In this homework, there are two BRDF components, the diffuse one f_d and the specular one f_s.
+      You should first randomly select one of the BRDF function, either f_s or f_d. Then randomly generate a sample direction from it.
+      The sampling equation for f_s is as follow.</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <img src="fs_sample.png" style="width:100%">
+      </div>
+      <div class="col-sm">      
+      </div>
+    </div>
+    <p>where &zeta;_1 and &zeta;_2 are two uniform random variable.
+      Remember that h is the middle vector of w_i and w_o. 
+      Then you can easily compute w_i, since w_i is the reflected vector of w_o related to h_sample. 
+      Another thing worth noting is that h_sample is defined in the local tangent frame as opposed to the world space. 
+      The sampling equation for f_d is as follow.</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <img src="fd_sample.png" style="width:60%">
+      </div>
+      <div class="col-sm">      
+      </div>
+    </div>
+    <p>Again, the direction is defined in the local tangent frame.</p>
+    <p><b>Compute pdf_b':</b> This is straightforward.
+    The pdf for f_s is computed as follows</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <img src="pdf_s.png" style="width:60%">
+      </div>
+      <div class="col-sm">      
+      </div>
+    </div>
+    <p>The pdf for f_d is 1 / (2 * pi). And the final pdf_b' is the average of them.</p>
+    <p><b>Compute t_l and t_b:</b> Firstly, you need to compute the probability for the direction w_i under BRDF distribution.
+      The way to do it is explained above. Denote it as pdf_b. Then t_l = pdf_l^2 /(pdf_l^2 + pdf_b^2).
+      Likewise, to calculate t_b, you need to compute the probability for w_i' under light sampling method. Denote it as pdf_l'.
+      The way to do it is also explained above. Then t_b = pdf_b'^2 /(pdf_l'^2 + pdf_b'^2). 
+      Note that if w_i' is not hitting the randomly selected light source from Step 2, then t_b = 0.
+    </p>
+    <p>Applying the above method gives the result below. As you can see the highlight is sharp.</p>
+    <p><img src="cc.png"></p>
+-->
+
+
+  </div>
+<hr>
+<address>
+Bohan Wang, Jernej Barbic, USC.
+</address>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from viterbi-web.usc.edu/~jbarbic/cs420-s24/assign3/extension/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jul 2024 06:09:24 GMT -->
+</html>
+
+</noscript></body></html>

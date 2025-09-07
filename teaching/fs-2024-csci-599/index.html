@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Geometric Shape Modeling</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/images/cheeseman_favicon.ico"/>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1>
+									Geometric Shape Modeling
+									<br>
+									USC CSCI 599 30015D, spring semester 2024
+								</h1>
+								<p><span class="authorname">Oded Stein</span>, <span class="institution">University of Southern California</span></p>
+							</header>
+
+							<section class="abstract">
+								<h2>Course Description</h2>
+								<p>In this class students will learn the basics of modern geometry processing with applications in computer graphics and computer-aided fabrication. Students will get an overview over the whole geometry processing pipeline and many of its important tools, from the acquisition / creation of surfaces, the manipulation of surfaces, the texturing of surfaces, and the output of surfaces. Our focus will always be on shapes in 3D, which we view as manifolds from differential geometry on which we solve algebraic and differential equations.
+								As a final project, students will implement a recent geometry processing research paper, demonstrating their full mastery of modern geometry topics.
+								</p>
+							</section>
+							<section class="comments">
+								<h2>Hours</h2>
+								<p>Lectures: Tuesday & Thursday, 15:30-17:20, GFS 228</p>
+								<p>Office hours: Thursday, 11:00-11:50, SAL 344</p>
+								<br><br>
+
+								<h2>Late Policy</h2>
+								<p>Late submissions get a 10% penalty for each late day, up to 7 days, after which no points will be awarded for the assignment.</p>
+								<br><br>
+
+								<h2>Prerequisites</h2>
+								<p>Knowledge of Linear Algebra, Calculus&Vector Calculus, good familiarity with C++, Algorithms</p>
+								<p>You can self-evaluate your knowledge of the prerequisites with the <a href="./pre-test.pdf">Prerequisite questionnaire</a>.
+								I recommend you do this before or during the first week of the course!</p>
+
+								<h2>Surveys</h2>
+								<p>From time to time I will post surveys on this website to gauge your progress.
+								Participation is voluntary.</p>
+							</section>
+
+							<section class="links">
+								<h2>Links</h2>
+								<ul>
+							    	<li><a href="./syllabus.pdf">Syllabus</a></li>
+							    	<li><a href="./pre-test.pdf">Prerequisite questionnaire</a></li>
+							    	<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLX0KOZOlKbbaDyjnaEw7WG3BzsG2w8AOCSlnXsoP4kfT-Lg/viewform?usp=sf_link">Survey on prerequisite questionnaire</a></li>
+							    	<li><a href="https://forms.gle/QSZNVHkFRjz5E6NL7">Week 4 survey</a></li>
+							    	<li>Exercises for each week:
+							    		<ul>
+											<li>Exercise 1: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-1">getting familiar with the programming environment</a></li>
+											<li>Exercise 2: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-2">surface reconstruction</a></li>
+											<li>Exercise 3: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-3">surface registration</a></li>
+											<li>Exercise 4: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-4">smoothing</a></li>
+											<li>Exercise 5: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-5">subdivision</a></li>
+											<li>Exercise 6: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-6">decimation</a></li>
+											<li>Exercise 7: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-7">deformation</a></li>
+											<li>Exercise 8: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-8">parametrization</a></li>
+											<li>Exercise 9: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-9">distances</a></li>
+											<li>Exercise 10: <a href="https://github.com/odedstein/fs-2024-csci-599-exercise-10">curvature</a></li>
+							    		</ul>
+							    	</li>
+							    	<li>Lecture notes for each week:
+							    		<ul>
+							    			<li><a href="./week1.pdf">Week 1</a></li>
+							    			<li><a href="./week2.pdf">Week 2</a></li>
+							    			<li><a href="./week3.pdf">Week 3</a></li>
+							    			<li><a href="./week4.1.pdf">Week 4, Part 1</a></li>
+							    			<li><a href="./week4.2.pdf">Week 4, Part 2</a></li>
+							    			<li><a href="./week5.pdf">Week 5</a></li>
+							    			<li><a href="./week6.pdf">Week 6</a></li>
+							    			<li><a href="./week7.pdf">Week 7</a></li>
+							    			<li><a href="./week8.pdf">Week 8</a></li>
+							    			<li><a href="./week9.pdf">Week 9</a></li>
+							    			<li><a href="./week10.pdf">Week 10</a></li>
+							    			<li><a href="./week11.pdf">Week 11</a></li>
+							    			<li><a href="./week12.pdf">Week 12</a></li>
+							    		</ul>
+							    	</li>
+							    	<li><a href="./final-project-slides.pdf">Slides about the final project from the last class</a></li>
+							    </ul>
+							</section>
+
+							<section class="comments">
+								<h2>Final project topics</h2>
+								<p>As the final project, you will implement a SGP/SIGGRAPH paper and do an in-class presentation about it.
+								Refer to <a href="./final-project-description.pdf">this document</a> for details on how the project should be completed, what is expected of you in terms of the implementation/presentation, and how the final project will be graded.</p>
+
+								<p>You have to pick your final project topic from the following list of past papers. As soon as a paper is claimed, I will cross it out on this list. Please email me to claim a paper - the first person to email me gets to claim it.</p>
+								<ul>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3243651">The Vector Heat Method</a></s><em>(Claimed)</em></li>
+									<li><s><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14069">A Laplacian for Nonmanifold Triangle Meshes</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/cgf.13931">Polygon Laplacian Made Simple</a></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/2601097.2601116">Projective dynamics: fusing constraint projections for fast simulation</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14356">Normal-Driven Spherical Shape Analogies</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3592403">Surface Simplification using Intrinsic Error Metrics</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/abs/10.1145/3386569.3392418">Neural subdivision</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3180491">Stable Neo-Hookean Flesh Simulation</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/3132705">Boundary First Flattening</a></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/3197517.3201356">Variational surface cutting</a></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/3306346.3322979">Navigating intrinsic triangulations</a></li>
+									<li><s><a href="https://dl.acm.org/doi/abs/10.1145/3386569.3392374">Monte Carlo geometry processing: a grid-free approach to PDE-based methods on volumetric domains</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/abs/10.1145/3450626.3459801">Fast quasi-harmonic weights for geometric data interpolation</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3414685.3417839">You can find geodesic paths in triangle meshes by just flipping edges</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/3233984">Surface Reconstruction Based on the Modified Gauss Formula</a></li>
+									<li><a href="https://dl.acm.org/doi/abs/10.1145/3386569.3392415">Point2Mesh: a self-prior for deformable meshes</a></li>
+									<li><s><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.13797">Parallel Globally Consistent Normal Orientation of Raw Unorganized Point Clouds</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://dl.acm.org/doi/abs/10.1145/3306346.3322986">Harmonic triangulations</a></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/2461912.2461957">Make it stand: balancing shapes for 3D fabrication</a></li>
+									<li><a href="https://dl.acm.org/doi/abs/10.1145/3528223.3530141">Neural jacobian fields: learning intrinsic mappings of arbitrary meshes</a></li>
+									<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/cgf.14068">Properties of Laplace Operators for Tetrahedral Meshes</a></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3197517.3201280">Dynamic kelvinlets: secondary motions based on fundamental solutions of elastodynamics</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/3306346.3323014">Anisotropic elasticity for inversion-safety and element rehabilitation</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://onlinelibrary.wiley.com/doi/10.1111/cgf.13624">Elastic Correspondence between Triangle Meshes</a></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/2185520.2185526">Functional maps: a flexible representation of maps between shapes</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/2983621">Scalable Locally Injective Mappings</a></li>
+									<li><a href="https://dl.acm.org/doi/10.1111/cgf.13243">Isometry-Aware Preconditioning for Mesh Parameterization</a></li>
+									<li><s><a href="https://dl.acm.org/doi/10.1145/2766963">Convolutional wasserstein distances: efficient optimal transportation on geometric domains</a></s> <em>(Claimed)</em></li>
+									<li><s><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14374">Developable Approximation via Gauss Image Thinning</a></s> <em>(Claimed)</em></li>
+									<li><a href="https://dl.acm.org/doi/10.1145/2816795.2818078">Instant field-aligned meshes</a></li>
+								</ul>
+
+								<p>If you want to implement a recent computer graphics paper that is not from this list, it might be possible, but <em>you have to ask for instructor permission first</em>.</p>
+							</section>
+
+							<section class="acknowledgements">
+								<h2>Acknowledgements</h2>
+								<p>This class is based on Alec Jacobson's <a href="https://github.com/alecjacobson/geometry-processing-csc2520">Geometry Processing class</a> from the University of Toronto.</p>
+							</section>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer>
+						<div class="inner">
+						<!-- Logo -->
+							<p><a href="https://odedstein.com" class="logo">
+								<span class="symbol"><img src="./assets/images/cheeseman_small.png" /></span>
+								Oded Stein</a>
+							</p>
+							<p class="copyright">Based on the <a href="https://html5up.net/phantom">Phantom</a> <a href="https://html5up.net">HTML5Up</a> template, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

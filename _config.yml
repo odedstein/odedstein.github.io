@@ -1,0 +1,92 @@
+# Purity Jekyll Theme
+#=====================
+
+## Plugin Configurations
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+sass:
+  style: compressed
+
+
+## Globals
+
+url:     https://odedstein.com
+baseurl: /
+
+title: Oded Stein                          #Optional
+timezone: America/New_York
+
+author:
+  name:     Oded Stein
+  link:     https://odedstein.com
+  photo:
+    alt:    Avatar from GitHub
+    remote: https://avatars2.githubusercontent.com/u/15190235
+    local: assets/images/portrait.png
+
+github:
+  user: odedstein
+  repo:
+
+
+## Theme and Layout
+
+# Defaults:
+# ---------
+#
+
+#theme:
+#   tooltips: disabled
+#   hover_light: enabled
+
+# fonts:
+#   base: Noto Sans
+#   head: Montserrat
+#   mono: Ubuntu Mono
+#
+
+theme:
+  tooltips: disabled
+
+layout:
+  header:
+    style: scroll # (can be: scroll | fixed | disabled)
+  footer:
+    style: scroll # (can be: scroll | fixed | disabled)
+  sidebar:
+    style: disabled # (can be: left | right | disabled)
+
+
+topmenu:
+  Research:
+    Research:
+      url: https://odedstein.com/publications.html
+      title: Research
+      icon: files-o
+  Teaching:
+    Teaching:
+      url: https://odedstein.com/teaching.html
+      title: Teaching
+      icon: book
+  Blog:
+    Blog:
+      url: https://odedstein.com/blog.html
+      title: Blog
+      icon: comments-o
+  # CV:
+  #   CV:
+  #     url: https://odedstein.com/files/cv.pdf
+  #     title: CV
+  #     icon: user
+
+
+# Blog settings
+future: true
+excerpt_separator: <!-- more -->
+
+# # Temp settings to limit website size
+# exclude:
+#   - "*.7z"

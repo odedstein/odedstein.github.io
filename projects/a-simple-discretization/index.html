@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>A Simple Discretization of the Vector Dirichlet Energy</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./acmsiggraph.css">
+  <style></style></head>
+  <body>
+    <h1>A Simple Discretization of the Vector Dirichlet Energy
+    <br />
+    <span class="venue">Symposium on Geometry Processing 2020</span>
+    <p></p>
+    <p></p>
+    </h1>
+    <div class="authors">
+      <p>
+        <a href="http://odedstein.com">Oded Stein</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://num.math.uni-goettingen.de/~wardetzky/">Max Wardetzky</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.cs.toronto.edu/~jacobson/">Alec Jacobson</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.cs.columbia.edu/~eitan/">Eitan Grinspun</a>
+      </p>
+      <p>
+        <a href="http://www.cs.columbia.edu/cg/">Columbia University</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://ddg.math.uni-goettingen.de">University of Göttingen</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.dgp.toronto.edu/">University of Toronto</a>
+      </p>
+    </div>
+    
+    <figure>
+      <a href="./teaser.jpg">
+        <img class="fig-teaser" src="./teaser.jpg">
+      </a>
+      <figcaption>
+        Parallel transporting a vector across a surface with our Crouzeix-Raviart discretization of vector heat flow (left), and denoising a vector field with our discretization of the vector diffusion equation (right).
+      </figcaption>
+    </figure>
+
+    <h3>Abstract</h3>
+    <p>
+We present a simple and concise discretization of the covariant derivative vector Dirichlet energy for triangle meshes in 3D using Crouzeix-Raviart finite elements. The discretization is based on linear discontinuous Galerkin elements, and is simple to implement, without compromising on quality: there are two degrees of freedom for each mesh edge, and the sparse Dirichlet energy matrix can be constructed in a single pass over all triangles using  a short formula that only depends on the edge lengths, reminiscent of the scalar cotangent Laplacian. Our vector Dirichlet energy discretization can be used in a variety of applications, such as the calculation of Killing fields, parallel transport of vectors, and smooth vector field design. Experiments suggest convergence and suitability for applications similar to other discretizations of the vector Dirichlet energy.
+    </p>
+
+    <h3>Remark</h3>
+    <p>
+After publication, we reviewed the M.Sc. thesis "Tangent Vector Fields on Triangulated Surfaces - An Edge-Based Approach" by Alexandre Djerbetian, 2016, supervised by Mirela Ben-Chen, and now fully grasp its significant overlap with our paper. Djerbetian introduces essentially the same operator and demonstrates a similar suite of applications. The thesis is archived by the Technion Graduate School at <a href="https://www.graduate.technion.ac.il/Theses/Abstracts.asp?Id=30013">https://www.graduate.technion.ac.il/Theses/Abstracts.asp?Id=30013</a>
+    </p>
+
+    <h3>Downloads</h3>
+    <ul class="link-list">
+      <li><a href="./a-simple-discretization.pdf">Paper preprint</a></li>
+      <li><a href="https://diglib.eg.org/handle/10.1111/cgf14070">Eurographics Digital Library link</a></li>
+      <li><a href="https://github.com/odedstein/ASimpleDiscretizationOfTheVectorDirichletEnergy">Project code</a></li>
+    </ul>
+
+    <h3>BibTeX</h3>
+    <pre><code>@article {Stein2020ASimpleDiscretization,
+journal = {Computer Graphics Forum},
+title = {A Simple Discretization of the Vector Dirichlet Energy},
+author = {Stein, Oded and Wardetzky, Max and Jacobson, Alec and Grinspun, Eitan},
+year = {2020},
+volume = {39},
+number = {5},
+publisher = {The Eurographics Association and John Wiley & Sons Ltd.},
+DOI = {10.1111/cgf.14070}
+}</code></pre>
+   <h3>Acknowledgements</h3>
+   <p>
+
+This work is supported by the National Science Foundation (NSF Award IDs CCF-17-17268, IIS-1717178).
+This work is partially supported by the Canada Research Chairs Program and the Fields
+Centre for Quantitative Analysis and Modeling.
+This work is partially supported by the DFG project 282535003: Geometric curvature functionals: energy landscape and discrete methods.
+
+We thank Anne Fleming, Henrique Maia, Honglin Chen, Josh Holinaty, John Kanji, Abhishek Madan, and Mirela Ben-Chen for proofreading.
+   </p>
+
+
+
+</body></html>

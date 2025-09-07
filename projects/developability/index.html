@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Developability of Triangle Meshes</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./acmsiggraph.css">
+  <style></style></head>
+  <body>
+    <h1> Developability of Triangle Meshes
+    <br />
+    <span class="venue">ACM SIGGRAPH 2018</span>
+    <p></p>
+    <p></p>
+    </h1>
+    <div class="authors">
+      <p>
+        <a href="http://odedstein.com">Oded Stein</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.cs.columbia.edu/~eitan/">Eitan Grinspun</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.cs.cmu.edu/~kmcrane/">Keenan Crane</a>
+      </p>
+      <p>
+        <a href="http://www.cs.columbia.edu/cg/">Columbia University</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://geometry.cs.cmu.edu/">Carnegie Mellon University</a>
+      </p>
+    </div>
+    
+    <figure>
+      <a href="./teaser.jpg">
+        <img class="fig-teaser" src="./teaser.jpg">
+      </a>
+      <figcaption>
+By encouraging discrete developability, a given mesh evolves toward a shape
+comprised of flattenable pieces separated by highly regular seam curves.
+      </figcaption>
+    </figure>
+
+    <h3>Abstract</h3>
+    <p>
+A surface is <i>developable</i> if it can be flattened into the plane
+without stretching or shearing - piecewise developable surfaces are
+desirable in contexts like manufacturing, where an object might be
+assembled from pieces of, \eg, thin plywood or sheet metal, or milled
+from a solid block using a cylindrical cutting tool.
+<br ?>
+We introduce a new notion of developability for triangle meshes which
+captures two key properties of smooth developable surfaces, namely
+flattenability and existence of straight ruling lines.
+This definition can be used as a starting point for
+algorithms in developable surface modeling - we consider a variational
+approach that drives a given mesh toward developable pieces separated by
+regular seam curves. Computation amounts to gradient descent on an energy
+with support in the vertex star, without the need to explicitly cluster patches
+or identify seams. We briefly explore applications to developable design and
+manufacturing.
+    </p>
+    <h3>Links</h3>
+    <ul class="link-list"> 
+      <li><a href="./developability-of-triangle-meshes.pdf">Paper preprint</a> (contains errata as Acrobat comments)</li>
+      <li><a href="https://dl.acm.org/citation.cfm?id=3201303">ACM Library link</a></li>
+      <li><a href="https://github.com/odedstein/DevelopabilityOfTriangleMeshes">github code</a></li>
+      <li><a href="./preprocessing.html">A note on preprocessing</a></li>
+      <li><a href="https://www.cs.cmu.edu/~kmcrane/Projects/DiscreteDevelopable/discrete-developable-data.zip">A collection of meshes used to generate the figures in the article</a></li>
+    </ul>
+    
+    <h3>Video</h3>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/xFUE_Vcevpw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <h3>BibTeX</h3>
+    <pre><code>@article{Stein:2018:DSF,
+author = {Stein, Oded and Grinspun, Eitan and Crane, Keenan},
+title = {Developability of Triangle Meshes},
+journal = {ACM Trans. Graph.},
+volume = {37},
+number = {4},
+year = {2018},
+publisher = {ACM},
+address = {New York, NY, USA},
+}</code></pre>
+   <h3>Acknowledgements</h3>
+   <p>
+Thanks to Timothy Sun for preliminary discussion and investigation, and to
+Ryan Schmidt for performing the toolpath extraction and milling for our faucet
+example.
+This work was sponsored in part by NSF Awards 1717320 1409286, 1717268, and
+1319483, and gifts from Adobe, Autodesk Research, Pixar, and SideFX Software.
+Any opinions, findings, and conclusions or recommendations expressed in this
+material are those of the author(s) and do not necessarily reflect the views
+of the National Science Foundation.
+   </p>
+
+
+
+</body></html>

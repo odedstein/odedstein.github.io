@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>A Splitting Scheme for Flip-Free Distortion Energies</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/images/cheeseman_favicon.ico"/>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1>A Splitting Scheme for Flip-Free Distortion Energies</h1>
+								<p class="venue">SIAM Journal on Imaging Sciences</p>
+								
+								<p><span class="authorname">Oded Stein</span>, <span class="institution">MIT</span></p>
+								<p><span class="authorname">Jiajin Li</span>, <span class="institution">The Chinese University of Hong Kong</span></p>
+								<p><span class="authorname">Justin Solomon</span>, <span class="institution">MIT</span></p>
+							</header>
+
+							<section class="teaser">
+								<figure>
+									<img src="teaser.jpg" />
+									<figcaption><span class="emph">Figure 1.</span>
+									Minimizing distortion energies in a variety of applications using our splitting method: UV mapping (left, computing a distortion-minimizing map from the surface to R<sup>2</sup>), shape deformation (center, fixing control points to deformed position and find the distortion-minimizing map), volume correspondence (right, finding the distortion-minimizing map between the interior of two different surfaces). Our method produces a flip-free result, unlike methods based on energies such as ARAP, which can exhibit flips when performing the same operation (flipped elements in red).</figcaption>
+								</figure>
+							</section>
+
+							<section class="abstract">
+								<h2>Abstract</h2>
+								<p>
+									We introduce a robust optimization method for flip-free distortion energies used, for example, in parametrization, deformation, and volume correspondence. This method can minimize a variety of distortion energies, such as the symmetric Dirichlet energy and our new symmetric gradient energy. We identify and exploit the special structure of distortion energies to employ an operator splitting technique, leading us to propose a novel Alternating Direction Method of Multipliers (ADMM) algorithm to deal with the non-convex, non-smooth nature of distortion energies. The scheme results in an efficient method where the global step involves a single matrix multiplication and the local steps are closed-form per-triangle/per-tetrahedron expressions that are highly parallelizable. The resulting general-purpose optimization algorithm exhibits robustness to flipped triangles and tetrahedra in initial data as well as during the optimization. We establish the convergence of our proposed algorithm under certain conditions and demonstrate applications to parametrization, deformation, and volume correspondence.
+								</p>
+							</section>
+
+							<section class="links">
+								<h2>Links</h2>
+								<ul>
+									<li><a href="https://epubs.siam.org/doi/abs/10.1137/21M1433058">SIAM archive</a></li>
+							    	<li><a href="./flip-free-parametrization.pdf">paper preprint</a></li>
+							    	<li><a href="https://arxiv.org/abs/2107.05200">arXiv entry</a></li>
+							    	<li><a href="https://github.com/odedstein/flip-free-parametrization">Github repository</a></li>
+							    	<li><a href="./supplemental_code_without_dataset.7z">supplemental implementation code</a></li>
+							    	<li><a href="./supplemental_some_results.7z">Result meshes</a></li>
+							    	<li><a href="./supplemental_videos.7z">Supplemental videos</a></li>
+							    	<li><a href="./supplemental_mathematica.7z">Supplemental mathematica scripts</a></li>
+							    </ul>
+							</section>
+
+							<!-- <section class="comments">
+								<h2>Comments</h2>
+								<p></p>
+							</section> -->
+
+							<!-- <section class="video">
+								<h2>Video</h2>
+							</section> -->
+
+							<section class="bib">
+								<h2>Cite as</h2>
+								<pre><code>@article{Stein2022,
+author = {Stein, Oded and Li, Jiajin and Solomon, Justin},
+title = {A Splitting Scheme for Flip-Free Distortion Energies},
+journal = {SIAM Journal on Imaging Sciences},
+volume = {15},
+number = {2},
+pages = {925--959},
+year = {2022}
+}</code></pre>
+							</section> 
+
+							<section class="acknowledgements">
+								<h2>Acknowledgements</h2>
+								<p>This work is supported by the Swiss National Science Foundation’s Early Postdoc.Mobility fellowship.
+								The MIT Geometric Data Processing group acknowledges the generous support of Army Research Office grant W911NF2010168, of Air Force Office of Scientific Research award FA9550-19-1-031, of National Science Foundation grant IIS-1838071, from the CSAIL Systems that Learn program,  from the MIT–IBM Watson AI Laboratory, from the Toyota–CSAIL Joint Research Center, from a gift from Adobe Systems, from an MIT.nano ImmersionLab/NCSOFT Gaming Program seed  grant, and  from  the Skoltech–MIT Next GenerationProgram.</p>
+							</section>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer>
+						<div class="inner">
+						<!-- Logo -->
+							<p><a href="https://odedstein.com" class="logo">
+								<span class="symbol"><img src="./assets/images/cheeseman_small.png" /></span>
+								Oded Stein</a>
+							</p>
+							<p class="copyright">Based on the <a href="https://html5up.net/phantom">Phantom</a> <a href="https://html5up.net">HTML5Up</a> template, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

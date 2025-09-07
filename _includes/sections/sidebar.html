@@ -1,0 +1,56 @@
+{% unless site.layout.sidebar.style == 'disabled' %}
+  <div id='site-sidebar' class='pure-u site-sidebar'>
+    <label for='reveal-sidebar-checkbox' class='reveal-sidebar'>
+      <i class='fa fa-2x fa-bars'></i>
+    </label>
+    <input type='checkbox' id='reveal-sidebar-checkbox' value='button'>
+
+    <div class='sidebar-contents'>
+      <div class='vertical-menu'>
+        <ul class='menu-list'>
+
+          {% for link_group in site.sidemenu %}
+            <li class='menu-heading'> {{ link_group[0] }}</li>
+
+            {% for link in link_group[1] %}
+              {% if link[1].type == 'spacer' %}       <li class='menu-spacer'></li>
+              {% elsif link[1].type == 'separator' %} <li class='menu-separator'></li>
+              {% comment %} TODO: Optimize stupid linear search? {% endcomment %}
+              {% elsif link[1].local %}
+                {% for page in site.pages %}
+                  {% if page.path == link[1].local %}
+                    <li class='menu-item'>
+                      <a class='menu-link' href='{{ site.baseurl }}{{ page.url }}'>
+                        {% if page.icon %}
+                          <i class='fa fa-fw fa-{{ page.icon }}'></i>
+                        {% endif %}
+                        {{ page.title }}
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                <li class='menu-item'>
+                  <a class='menu-link' href='{{ link[1].url }}'>
+                    {% if link[1].icon %}
+                      <i class='fa fa-fw fa-{{ link[1].icon }}'></i>
+                    {% endif %}
+                    {{ link[1].title }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+
+        </ul>
+      </div>
+      <br>
+      <div class='sidebar-note'>
+        <div class='faded-foreground'>
+          Last modified<br>
+          {{ site.time }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endunless %}

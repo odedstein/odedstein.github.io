@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<h1>{% if page.icon %}<i class="page-icon fa fa-fw fa-{{ page.icon }}"></i>{% endif %} {{ page.title }}</h1>
+<p>
+    <span class="postauthor">{{ page.author }}</span>
+    <span class="postseparator">|</span>
+    <span class="postdate">{{ page.date | date_to_string }}</span>
+</p>
+
+{{ content }}
+
+<br>
+<hr>
+<p>
+    <span class="postcategorylabel">Category: </span>
+    <span class="postcategorytext">{{ page.category }}</span>
+</p>
+<br>

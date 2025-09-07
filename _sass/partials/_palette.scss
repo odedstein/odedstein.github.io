@@ -1,0 +1,27 @@
+/* Vars-Required-From:
+*   Nil
+*
+* Vars-Set-Fom:
+*   Nil
+*/
+
+$site-color-background: #fffffc;
+$site-color-foreground: #2B4162;
+$site-color-highlight: #268BCC; /*#2982A0;*/
+$site-color-hyperlink: #0066CC; /*#0B6E4F;*/
+$site-color-accent: #E11A27; /*#A52624;*/
+
+@include make_site_color_faded($default-color-delta-large / 100, ((background, $site-color-background), (foreground, $site-color-foreground), (highlight, $site-color-highlight), (hyperlink, $site-color-hyperlink), (accent, $site-color-accent)));
+
+body {
+background-color: $site-color-background;
+color: $site-color-foreground;
+}
+
+#{headings()} {
+@include set_color_and_hover($site-color-foreground);
+}
+
+a {
+@include set_color_and_hover($site-color-hyperlink);
+}

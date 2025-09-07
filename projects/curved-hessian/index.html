@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>A Smoothness Energy without Boundary Distortion for Curved Surfaces</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./acmsiggraph.css">
+  <style></style></head>
+  <body>
+    <h1>A Smoothness Energy without Boundary Distortion for Curved Surfaces
+    <br />
+    <span class="venue">ACM Transactions on Graphics 2020</span>
+    <p></p>
+    <p></p>
+    </h1>
+    <div class="authors">
+      <p>
+        <a href="http://odedstein.com">Oded Stein</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.cs.toronto.edu/~jacobson/">Alec Jacobson</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://num.math.uni-goettingen.de/~wardetzky/">Max Wardetzky</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.cs.columbia.edu/~eitan/">Eitan Grinspun</a>
+      </p>
+      <p>
+        <a href="http://www.cs.columbia.edu/cg/">Columbia University</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.dgp.toronto.edu/">University of Toronto</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://ddg.math.uni-goettingen.de">University of Göttingen</a>
+      </p>
+    </div>
+    
+    <figure>
+      <a href="./teaser.jpg">
+        <img class="fig-teaser" src="./teaser.jpg">
+      </a>
+      <figcaption>
+        Solving an interpolation problem on an airplane. Using the Laplacian energy with zero Neumann boundary conditions (left) distorts the result near the windows and the cockpit of the plane: the isolines bend so they can be perpendicular to the boundary. The planar Hessian energy of Stein et al. [2018] (center) is unaffected by the holes, but does not account for curvature correctly, leading to unnatural spacing of isolines at the front and back of the fuselage. Our Hessian energy (right) produces a natural-looking result with more regularly spread isolines, unaffected by the boundary.
+      </figcaption>
+    </figure>
+
+    <h3>Abstract</h3>
+    <p>
+Current quadratic smoothness energies for curved surfaces either
+exhibit distortions near the boundary due to zero Neumann boundary
+conditions, or they do not correctly account for intrinsic curvature,
+which leads to unnatural-looking behavior away from the boundary.
+This leads to an unfortunate trade-off: one can either have natural behavior
+in the interior, or a distortion-free result at the boundary, but not both.
+We introduce a generalized Hessian energy for curved surfaces,
+expressed in terms of the covariant one-form
+Dirichlet energy, the Gaussian curvature, and the exterior derivative.
+Energy minimizers solve the Laplace-Beltrami biharmonic equation,
+correctly accounting for intrinsic curvature, leading to
+natural-looking isolines.
+On the boundary, minimizers are as-linear-as-possible, which reduces
+the distortion of isolines at the boundary.
+We discretize the covariant one-form Dirichlet energy using
+Crouzeix-Raviart finite elements, arriving at a discrete formulation of the
+Hessian energy for applications on curved surfaces.
+We observe convergence of the discretization in our experiments.
+    </p>
+    <h3>Downloads</h3>
+    <ul class="link-list">
+      <li><a href="./curved-hessian.pdf">Paper preprint</a> (contains erratum as Acrobat comment)</li>
+      <li><a href="https://dl.acm.org/doi/abs/10.1145/3377406">ACM Digital Library link</a></li>
+      <li><a href="https://arxiv.org/abs/1905.09777">arXiv link</a></li>
+      <li><a href="https://github.com/odedstein/ASmoothnessEnergyWithoutBoundaryDistortionForCurvedSurfaces">project code</a></li>
+    </ul>
+    
+    <h3>Video</h3>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ku3RfHMVvYE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h3>BibTeX</h3>
+    <pre><code>@article{10.1145/3377406,
+author = {Stein, Oded and Jacobson, Alec and Wardetzky, Max and Grinspun, Eitan},
+title = {A Smoothness Energy without Boundary Distortion for Curved Surfaces},
+year = {2020},
+issue_date = {March 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {39},
+number = {3},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3377406},
+doi = {10.1145/3377406},
+journal = {ACM Trans. Graph.},
+month = mar,
+articleno = {Article 18},
+numpages = {17},
+keywords = {interpolation, Laplacian, biharmonic, Geometry, smoothing, Hessian, curvature} }</code></pre>
+   <h3>Acknowledgements</h3>
+   <p>
+This work is funded in part by the National Science Foundation Awards
+CCF-17-17268 and  IIS-17-17178.
+This research is funded in part by NSERC Discovery (RGPIN2017-05235,
+RGPAS-2017-507938), the Canada Research Chairs Program, the Fields Centre for
+Quantitative Analysis and Modelling and gifts by Adobe Systems, Autodesk and
+MESH Inc.
+This work is partially supported by the DFG project 282535003:
+Geometric curvature functionals: energy landscape and discrete methods.
+
+We thank Anne Fleming, Henrique Maia and Peter Chen for proofreading.
+   </p>
+
+
+
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Reach For the Arcs: Reconstructing Surfaces from SDFs via Tangent Points</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/images/cheeseman_favicon.ico"/>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1><em>Reach For the Arcs</em>:
+									<br>
+									Reconstructing Surfaces from SDFs via Tangent Points</h1>
+								<p class="venue">SIGGRAPH 2024</p>
+
+								<p><span class="authorname">Silvia Sellán</span>, <span class="institution">University of Toronto</span></p>
+								<p><span class="authorname">Yingying Ren</span>, <span class="institution">EPFL</span></p>
+								<p><span class="authorname">Christopher Batty</span>, <span class="institution">University of Waterloo</span></p>
+								<p><span class="authorname">Oded Stein</span>, <span class="institution">University of Southern California</span></p>
+							</header>
+
+							<section class="teaser">
+								<figure>
+									<img src="teaser.jpg" />
+									<figcaption><span class="emph">Figure 1.</span>
+										Our <em>Reach for the Arcs</em> algorithm consistently produces a more faithful mesh reconstruction from discrete SDF data at low and moderate resolutions compared to alternatives, as demonstrated on this nonzero genus Nightingale shape.</figcaption>
+								</figure>
+							</section>
+
+							<section class="abstract">
+								<h2>Abstract</h2>
+								<p>
+									We introduce an algorithm to reconstruct a mesh from discrete samples of a shape's Signed Distance Function (SDF).
+									A simple geometric reinterpretation of the SDF lets us formulate the problem through a point cloud, from which a surface can be extracted with existing techniques.
+									We extract all possible information from the SDF data,  outperforming commonly used algorithms and imposing no topological or geometric restrictions.
+								</p>
+							</section>
+
+							<section class="links">
+								<h2>Links</h2>
+								<ul>
+									<li><a href="https://example.com">ACM Library</a></li>
+							    	<li><a href="./reach-for-the-arcs.pdf">paper preprint</a></li>
+							    	<li><a href="./reach-for-the-arcs-compressed.pdf">paper preprint (compressed)</a></li>
+								<li><a href="https://gpytoolbox.org/latest/reach_for_the_arcs/">Official code (recommended)</a></li>
+							    	<li><a href="http://github.com/odedstein/reach-for-the-arcs-code/">Result meshes & submitted code</a></li>
+							    </ul>
+							</section>
+
+							<!-- <section class="comments">
+								<h2>Comments</h2>
+								<p></p>
+							</section> -->
+
+							<!-- <section class="video">
+								<h2>Video</h2>
+							</section> -->
+
+							<section class="bib">
+								<h2>Cite as</h2>
+<pre><code>@inproceedings{Sellan2024RFTA,
+author = {Sell\'{a}n, Silvia and Ren, Yingying and Batty, Christopher and Stein, Oded},
+title = {Reach For the Arcs: Reconstructing Surfaces from SDFs via Tangent Points},
+year = {2024},
+booktitle = {SIGGRAPH 2024 Conference Papers},
+articleno = {25},
+numpages = {11}
+}</code></pre>
+							</section> 
+
+							<section class="acknowledgements">
+								<h2>Acknowledgements</h2>
+								<p>This work received support from NSERC (Grant RGPIN-2021-02524), CFI (JELF Project 40132), an NSERC Vanier Scholarship, and SNSF (Grant FNS 514543 / CF 1156).</p>
+
+								<p>We thank Abhishek Madan, Nicholas Sharp, Chenxi Liu, Victor Rong, Dylan Rowe, and Kinjal Parikh for technical help and proofreading; Michael Kazhdan for his help with the official sPSR implementation; Eitan Grinspun and David Levin for their insightful suggestions regarding rasterization; and Daniella Sarit Levy for providing the mesh and poses for one of our figures.</p>
+
+								<p>We acknowledge and thank the authors of the 3D models used throughout this paper.
+								See the paper for a detailed list.</p>
+							</section>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer>
+						<div class="inner">
+						<!-- Logo -->
+							<p><a href="https://odedstein.com" class="logo">
+								<span class="symbol"><img src="./assets/images/cheeseman_small.png" /></span>
+								Oded Stein</a>
+							</p>
+							<p class="copyright">Based on the <a href="https://html5up.net/phantom">Phantom</a> <a href="https://html5up.net">HTML5Up</a> template, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

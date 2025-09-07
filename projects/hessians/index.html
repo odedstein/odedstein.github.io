@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Natural Boundary Conditions for Smoothing in Geometry Processing</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./acmsiggraph.css">
+  <style></style></head>
+  <body>
+    <h1> Natural Boundary Conditions for Smoothing in Geometry Processing
+    <br />
+    <span class="venue">ACM Transaction on Graphics 2018</span>
+    <p></p>
+    <p></p>
+    </h1>
+    <div class="authors">
+      <p>
+        <a href="http://odedstein.com">Oded Stein</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.cs.columbia.edu/~eitan/">Eitan Grinspun</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://num.math.uni-goettingen.de/~wardetzky/">Max Wardetzky</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://www.cs.toronto.edu/~jacobson/">Alec Jacobson</a> 
+      </p>
+      <p>
+        <a href="http://www.cs.columbia.edu/cg/">Columbia University</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://http://www.dgp.toronto.edu/home/">University of Toronto</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://ddg.math.uni-goettingen.de/">Universität Göttingen</a>
+      </p>
+    </div>
+    
+    <figure>
+      <a href="./teaser.jpg">
+        <img class="fig-teaser" src="./teaser.jpg">
+      </a>
+      <figcaption>
+Smoothing a noisy function with the Laplacian energy and
+common low-order boundary conditions (zero Neumann) introduces
+a bias at the boundary: isolines exit perpendicularly. We propose
+using a different smoothness energy, the Hessian energy,
+whose natural boundary conditions avoid this bias.
+      </figcaption>
+    </figure>
+
+    <h3>Abstract</h3>
+    <p>
+In geometry processing, smoothness energies are commonly used to model
+scattered data interpolation, dense data denoising, and regularization during
+shape optimization.
+The squared Laplacian energy is a popular choice of energy and has a
+corresponding standard implementation: squaring the discrete Laplacian matrix.
+For compact domains, when values along the boundary are not known in advance,
+this construction <i>bakes in</i> low-order boundary conditions.
+This causes the geometric shape of the boundary to strongly bias the solution.
+For many applications, this is undesirable.
+	</p><p>
+Instead, we propose using the squared Frobenius norm of the Hessian as a
+smoothness energy.
+Unlike the squared Laplacian energy, this energy's <i>natural boundary
+conditions</i> (those that best minimize the energy) correspond to meaningful
+high-order boundary conditions.
+These boundary conditions model free boundaries where the shape of the boundary
+should not bias the solution locally.
+Our analysis begins in the smooth setting and concludes with discretizations
+using finite-differences on 2D grids or mixed finite elements for triangle
+meshes.
+We demonstrate the core behavior of the squared Hessian as a smoothness energy
+for various tasks.
+    </p>
+    <h3>Downloads</h3>
+    <ul class="link-list">
+      <li><a href="./natural-bdry-cond-for-smoothing-in-gp.pdf">Paper</a></li>
+      <li><a href="https://dl.acm.org/citation.cfm?id=3186564">ACM Library link</a></li>
+      <li>Libigl <a href="https://github.com/libigl/libigl/blob/master/include/igl/hessian.h">Hessian</a> and <a href="https://github.com/libigl/libigl/blob/master/include/igl/hessian_energy.h">squared Hessian energy</a> implementation</li>
+      <li>Libigl <a href="https://libigl.github.io/tutorial/#data-smoothing">Hessian energy smoothing tutorial</a>.</li>
+    </ul>
+    
+    <h3>Videos</h3>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/2s8nEeIv-Jg?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <h3>BibTeX</h3>
+    <pre><code>@article{Stein:2018:NBC:3191713.3186564,
+ author = {Stein, Oded and Grinspun, Eitan and Wardetzky, Max and Jacobson, Alec},
+ title = {Natural Boundary Conditions for Smoothing in Geometry Processing},
+ journal = {ACM Trans. Graph.},
+ issue_date = {May 2018},
+ volume = {37},
+ number = {2},
+ month = may,
+ year = {2018},
+ issn = {0730-0301},
+ pages = {23:1--23:13},
+ articleno = {23},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/3186564},
+ doi = {10.1145/3186564},
+ acmid = {3186564},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Geometry processing, Hessian energy, Laplacian energy, denoising, smoothing},
+}</code></pre>
+   <h3>Acknowledgements</h3>
+   <p>
+We would like to thank Ladislav Kavan, Denis Zorin, and Jinshuo Dong for early discussions; Yu Wang for sharing source code; Paul Kry for hosting the 2017 Bellairs workshop; and organizers of the Dagstuhl Seminar #17232. 
+	</p><p>
+This work is funded in part by the Binational Science Foundation (US-Israel) Award 2012376, the National Science Foundation Award IIS-14-09286, the NSERC Discovery Grants (RGPIN-2017-05235 & RGPAS-2017-507938), a Canada Research Chair award, the Connaught Fund, and a gift from Adobe Systems Inc.
+   </p>
+
+
+
+</body></html>

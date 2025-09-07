@@ -1,0 +1,50 @@
+{% unless site.layout.header.style == 'disabled' %}
+  <div id='site-header' class='site-header'>
+    <div class='pure-g site-header-container'>
+
+      <div class='pure-u-1-1 pure-u-md-1-2 site-header-title-container text-align-left-medium'>
+        <a class='site-header-title' href='{{ site.baseurl }}/'>{{ site.title }}</a>
+        {% if site.tagline %}
+          <div class='site-header-subtitle'>{{ site.tagline }}</div>
+        {% endif %}
+      </div>
+
+      <div class='pure-u-1-1 pure-u-md-1-2 site-header-links text-align-right-medium'>
+      {% capture header_links %}
+        {% assign no_links_yet = true %}
+        {% for link_group in site.topmenu %}
+          {% if no_links_yet != true %}&nbsp;&middot;&nbsp;{% endif %}
+          {% assign no_links_yet = false %}
+          {% for link in link_group[1] %}
+            {% capture header_link %}
+            {% comment %} TODO: Optimize stupid linear search? {% endcomment %}
+            {% if link[1].local %}
+              {% for page in site.pages %}
+                {% if page.path == link[1].local %}
+                  <a class='tooltip-down' data-tooltip='{{ page.title }}' href='{{ site.baseurl }}{{ page.url }}'>
+                  {% if page.icon %}
+                    <i class='fa fa-fw fa-{{ page.icon }}'></i>
+                  {% endif %}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <a class='tooltip-down' data-tooltip='{{ link[1].title }}'
+                 href='{{ link[1].url }}'>
+                {% if link[1].icon %}
+                  <i class='fa fa-fw fa-{{ link[1].icon }}'></i>
+                {% endif %}
+                  <span>{{ link[1].title }}</span>
+              </a>
+            {% endif %}
+            {% endcapture %}
+            {{ header_link | strip }}
+          {% endfor %}
+        {% endfor %}
+      {% endcapture %}
+      {{ header_links | strip }}
+      </div>
+
+    </div>
+  </div>
+{% endunless %}

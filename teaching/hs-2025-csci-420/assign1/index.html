@@ -1,0 +1,583 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<!-- Mirrored from viterbi-web.usc.edu/~jbarbic/cs420-s24/assign1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jul 2024 04:12:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<title>CSCI 420 Programming Assignment 1: Height Fields Using Shaders</title>
+</head><body link="#0000ff" vlink="#aa00aa" alink="#ff0000" bgcolor="#ffffff">
+
+<!--
+<h2>
+<font color=red>
+This is an old assignment. Do not use.
+</font>
+</h2>
+-->
+
+<h1 style="font-family: helvetica,arial,sans-serif;">
+CSCI 420 Programming Assignment 1: Height Fields Using Shaders</h1>
+<h1 style="font-family: helvetica,arial,sans-serif;">
+
+<h2>
+Assignment Due Oct 7 2024 by 11:59pm</h2>
+<br>
+</h1>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">An Overview</h2>	
+<p style="font-family: helvetica,arial,sans-serif;">Height fields may
+be found in many applications of computer graphics.  They are used to
+represent terrain in video games and simulations, and also often
+utilized to represent data in three dimensions.  This assignment
+asks you to create a height field based on the data from an image
+which the user specifies at the command line, and to allow the user to
+manipulate the height field in three dimensions by rotating,
+translating, or scaling it. You also have to implement a vertex shader
+that performs smoothing of the geometry, and re-adjusts the geometry color.
+After the completion of your program, you
+will use it to create an animation. You will program the assignment
+using OpenGL's core profile.</p>
+	
+<p style="font-family: helvetica,arial,sans-serif;">This assignment
+is intended as a hands-on introduction to OpenGL and programming in
+three dimensions. It teaches the OpenGL's core profile and shader-based
+programming. The provided starter gives the functionality to initialize GLUT, 
+read and write a JPEG image, handle mouse and keyboard input,
+and display one triangle to the screen. 
+You must write code to handle camera transformations, 
+transform the landscape (translate/rotate/scale), and 
+render the heightfield. You must also write a shader 
+to perform geometry smoothing and re-color the terrain accordingly.
+Please see the OpenGL Programming Guide for
+information, or <a href="http://www.opengl.org/">OpenGL.org</a>.</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Background Information</h2>		
+
+<p style="font-family: helvetica,arial,sans-serif;"> A height field is
+a visual representation of a function which takes as input a
+two-dimensional point and returns a scalar value ("height") as output.</p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> Rendering a
+height field over arbitrary coordinates is somewhat tricky--we will
+simplify the problem by making our function piece-wise.  Visually, the
+domain of our function is a two-dimensional grid of points, and a height
+value is defined at each point.  We can render this data using only a
+point at each defined value, or use it to approximate a surface by
+connecting the points with triangles in 3D. </p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> You will be using
+image data from a grayscale JPEG file to create your height field, such that the
+two dimensions of the grid correspond to the two dimensions of the
+image and the height value is a function of the image grayscale level. Since you
+will be working with grayscale image, the bytes per pixel (i.e., ImageIO::getBytesPerPixel) is always 1
+and you don't have to worry about the case where the bytes per pixel is 3 (i.e., RGB images).
+</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Render Points, Lines and Triangles</h2>		
+
+<p style="font-family: helvetica,arial,sans-serif;">
+Your program needs to render the height field as points (when the key "1" is pressed on the keyboard), lines ("wireframe"; key "2"),
+or solid triangles (key "3"). The points, lines and solid triangles must be modeled using
+GL_POINTS, GL_LINES, GL_TRIANGLES, or their "LOOP" or "STRIP" variants.
+Usage of glPolygonMode (or similar) to achieve point or line rendering is not permitted.
+If in doubt, please ask the instructor/TA.
+</p>
+
+<table width="100%" border="5">
+<tr>
+  <td width="33.3%" align="center">
+  <h3>Points (key "1")</h3>
+  </td>
+  <td width="33.3%" align="center">
+  <h3>Lines (key "2")</h3>
+  </td>
+  <td width="33.3%" align="center">
+  <h3>Triangles (key "3")</h3>
+  </td>
+</tr>
+<tr>
+  <td width="33.3%" align="center"><img src="points.jpg" width=600></td>
+  <td width="33.3%" align="center"><img src="lines.jpg" width=600></td>
+  <td width="33.3%" align="center"><img src="triangles.jpg" width=600></td>
+</tr>
+</table>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Vertex Shader Requirement</h2>		
+
+<p style="font-family: helvetica,arial,sans-serif;">
+You should write a vertex shader that provides two rendering modes.
+
+<h3>The first mode -- keys "1", "2", "3"</h3>
+
+In the first mode, simply transform the vertex with the modelview and projection matrix.
+Leave the color unchanged in the shader. This vertex shader is already provided in the starter code.
+This mode should be used for point rendering (key "1"),
+line rendering (key "2"), and triangle rendering (key "3").
+To improve the visual quality of the terrain, feel free to scale the terrain height 
+with an arbitrary constant of your choice when using these modes 
+(keys "1", "2", "3"). You can do this on the CPU when creating your VBOs.
+</p>
+
+<h3>The second mode -- key "4"</h3>
+
+<p style="font-family: helvetica,arial,sans-serif;">
+In the second mode (key "4"), do not scale the terrain height on the CPU; 
+the height should equal 1.0 * heightmapImage->getPixel(i, j, 0) / 255.0f .
+In this mode, you should change the vertex position to the average position
+of itself and the four neighboring vertices -- do this <b>in the vertex shader</b>. 
+Specifically, replace p_center with (p_center + p_left + p_right + p_down + p_up) / 5 (see image).
+This will have the effect of smoothening the terrain (the effect is most visible at low image
+resolutions, e.g., 128 x 128). 
+
+<p>
+<img src="smoothen.jpg" width=350>
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;">
+Furthermore, you should change the vertex color and height, also <b>in the vertex shader</b>, according to the formulas:
+</p>
+<pre>
+outputColor <--- pow(y, exponent)
+y <--  scale * pow(y, exponent),
+</pre><br>
+<p style="font-family: helvetica,arial,sans-serif;">
+where scale and exponent are two constants. These constants are shader uniform variables
+and must be provided to your shader from the CPU. You can use the provided
+helper function PipelineProgram::SetUniformVariablef to do this.
+In your program on the CPU, you should bind the keys as follows:
+</p>
+<pre>
++    ... multiply the current "scale" by 2x
+-    ... divide the current "scale" by 2x
+9    ... multiply the current "exponent" by 2x
+0    ... divide the current "exponent" by 2x
+</pre><br>
+<p style="font-family: helvetica,arial,sans-serif;">
+The initial values for "scale" and "exponent" should both be 1. Then, when user
+presses those keys, you should upload the new variable value to the GPU.
+The variables "scale" and "exponent" are only needed when using key "4", i.e., in the second mode -- you don't
+need them when using keys "1", "2", "3".
+In mode "4", you only need to support triangle rendering; you do not need to draw points or lines in this mode.
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;">
+Finally, in the vertex shader, you should then transform the resulting vertex position 
+with the modelview and projection matrix
+in the vertex shader as usual.
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;">
+The positions of the four neighboring vertices
+should be passed into the vertex shader as additional attributes, in the same way
+as vertex position and color. In order to accommodate this,
+you should create additional VBOs. For example, one approach is to create 4 VBOs
+of 3-floats: position of the left vertex, right vertex, up vertex, down vertex. 
+Note that these positions include the height of the vertex as one of its coordinates.
+If the position of the right vertex is off the image (this will happen on the image boundary),
+set the "position" of the right vertex to the position of the center vertex. 
+Perform the equivalent operations also for the up/down vertices along the top and bottom edges
+of the image.
+The "scale" and "exponent" should be made available in the shader as uniform variables, as explained above.
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;">
+You should write <b>one</b> vertex shader that satisfies the above requirements.
+In order to switch between the two modes, you should create a uniform variable "uniform int mode" in the vertex shader,
+and upload it to the GPU using PipelineProgram::SetUniformVariablei.
+When the user presses keys "1", "2" or "3",
+mode should be set to 0, and when the user presses
+key "4", mode should be set to 1. 
+When mode=0, the vertex shader should execute the first mode described
+above. When mode=1, the vertex shader should
+execute the second mode (smoothen the vertex position and scale/exponentiate the terrain). 
+You can achieve this using an "if" statement in the vertex shader.
+</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Starter Code</h2>
+		
+<a name="startercode"></a>
+<p style="font-family: helvetica,arial,sans-serif;">
+<b>You can download the starter code here:</b>
+<a href="assign1_coreOpenGL_starterCode.zip">Starter code.</a></p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> 
+For the Windows platform, we provide the Visual Studio 
+solution/project files in ./hw1. The files works on VS 2017, 2019 and 2022.
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> 
+For Mac OS X, before you do any coding, you must install command-line utilities (make, gcc, etc.).
+Install XCode from the Mac app store, 
+then go to XCode, and use "Preferences/Download" to install the command line tools.
+Most students use a text editor of their choice,
+and the Terminal to compile the homework on Mac.
+<!--
+<b>Important:</b> If you are using Mac OS X Mojave, you need to update the OS to the latest version of Mojave. Otherwise, OpenGL does not work. Or, you can use Catalina, Big Sur or Monterey. 
+-->
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> 
+On Linux, you need the libjpeg library, which can be obtained by 
+"sudo apt-get install libjpeg62-dev libglew-dev". 
+For Windows and Mac OS X, the starter code contains a precompiled jpeg library.
+On Intel-based Apple chips, the jpeg library should work as is.
+On Apple <a href="https://en.wikipedia.org/wiki/Apple_M1">M1/M2/M3</a> ARM chips, you need to take the following steps to get jpeg library to compile and link:
+<pre>
+// Do this for Apple ARM chips ONLY. If you don't do it, you will
+// get linker errors related to the libjpeg library.
+// The below steps are not necessary for Windows, Linux or Intel-based Apple computers.
+// Execute these commands only in a directory/path that does not contain any
+// spaces, otherwise it might fail.
+
+cd external/jpeg-9a-mac
+
+chmod +x configure
+./configure --prefix=$(pwd)
+
+make clean
+
+make
+chmod +x install-sh
+make install
+
+cd ../../hw1
+make
+./hw1 heightmap/spiral.jpg
+</pre>
+</p>
+
+
+<p>
+Here is a sample sequence of Ubuntu or Mac Terminal Shell commands that get everything compiled.
+<em>Make sure that the directory/path you are working in does not contain any spaces, otherwise these commands might fail</em>:<br/><br/>
+
+> unzip assign1_coreOpenGL_starterCode.zip<br/>
+> cd hw1<br/>
+> make<br/>
+> ./hw1 heightmap/spiral.jpg<br/>
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> 
+If your OpenGL version is too low, try updating your graphics card driver 
+to a more recent version. <a href="http://www.nvidia.com/Download/index.aspx">
+Nvidia drivers</a> have been supporting OpenGL 3.2 since 2009.
+On the Mac, OpenGL core profile 
+3.2 is supported <a href="https://developer.apple.com/opengl/capabilities/index.html">since Mac OS X 10.7.5.</a></p>
+
+<p style="font-family: helvetica,arial,sans-serif;"> 
+Please email the TA if you have trouble compiling the starter code.
+</p>	
+
+<p>
+After successfully compiling the starter code and launching hw1, you should see a screen like this:<br>
+<img src="hw1-starterCode.png" width=600>
+</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Grading Criteria</h2>	
+<h3 style="font-family: helvetica,arial,sans-serif;">Your program must:</h3>
+<ul style="font-family: helvetica,arial,sans-serif;">
+    <li><b>Use the OpenGL core profile, version 3.2 or higher, and shader-based OpenGL.</b> 
+        The following are not allowed:
+        compatibility profile, commands that were deprecated and/or removed
+        in OpenGL version 3.2 or earlier, and the fixed-function pipeline.
+        Exact specification is available 
+        <a href="https://www.opengl.org/registry/doc/glspec32.core.20091207.pdf">here</a>.
+        If in doubt, please ask the instructor/TA.
+        Submissions that do not follow these guidelines will receive zero points.</li>
+    <li>Handle at least a 256x256 image for your height field at
+        interactive frame rates (window size of 1280x720). 
+        Height field transformations should run smoothly.</li>
+    <li>Be able to render the height field as points (key "1"), lines ("wireframe"; key "2"),
+        or solid triangles (key "3"), as described in the "Render Points, Lines and Triangles" above.</li>
+    <li>Render a smoothened height field (key "4"), colored with a smoothened color, as described in the "Vertex Shader Requirement" above.</li>
+    <li>Scale and exponentiate the height when using key "4", as described in the "Vertex Shader Requirement" above.</li>
+    <li>Render as a perspective view, utilizing GL's depth buffer for hidden surface removal.</li>
+    <li>Use input from the mouse to rotate the heightfield using OpenGLMatrix::Rotate.</li>
+    <li>Use input from the mouse to move the heightfield using OpenGLMatrix::Translate.</li>
+    <li>Use input from the mouse to change the dimensions of the heightfield using OpenGLMatrix::Scale.</li>
+    <li>Color the vertices using a color that is linearly proportional to the height 
+        (with higher values being brighter; color cannot be all black).</li>
+    <li>Be reasonably commented and written in an understandable
+        manner--we will read your code.</li>
+    <li>Be submitted along with JPEG frames for the required animation
+        (see below).</li>
+    <li>Be submitted along with a <b>readme file</b> documenting your program's features, 
+        describing any extra credit you have done, and anything else that
+        you may want to bring to our attention.</li>
+</ul>
+		 	
+<h3 style="font-family: helvetica,arial,sans-serif;">Animation Requirement</h3>	
+
+<p style="font-family: helvetica,arial,sans-serif;">After finishing
+your program, you are required to submit a series of JPEG images which are 
+screenshots from your program. Functionality to output a screenshot is included 
+in the starter code, and assumes you are using a window size of 1280x720 -- your 
+JPEG images must be this size.  Please name your JPEG frames 000.jpg, 001.jpg, 
+and so on, where 000.jpg is the first frame of your animation, and please do
+not exceed 300 frames.  Expect a framerate of 15 frames per second, which 
+corresponds to 20 seconds of animation running time maximum. </p>
+	
+<p style="font-family: helvetica,arial,sans-serif;"> 
+There is a large amount of room for creavitiy in terms
+of how you choose to show your results in the animation.
+You can use our provided input images, or modify them
+with any software you wish, or use your own input images.
+You may also use
+your animation to show off any extra features you choose to implement. 
+Your animation
+will receive credit based on its artistic content, whether pretty,
+funny, or just interesting in some manner.
+</p>
+
+<p style="font-family: helvetica,arial,sans-serif;">We will compile
+a video of all student submissions and show it in class. 
+<b>Optional:</b> If you would like
+to convert your frames to a video by yourself, you can use 
+<a href="http://www.adobe.com/products/premiere/">Adobe Premiere</a>, <a href="http://www.ffmpeg.org/">ffmpeg</a>, 
+<a href="http://www.apple.com/quicktime/extending/">QuickTime Pro</a>, 
+or <a href="http://en.wikipedia.org/wiki/Windows_Movie_Maker">Windows Movie Maker</a>. 
+
+	
+<h2 style="font-family: helvetica,arial,sans-serif;">Submission</h2>	
+<p style="font-family: helvetica,arial,sans-serif;">Please zip your code, readme 
+and JPEG images into a single file and submit it to Brightspace.
+Include all files that were already in the starter code. Your submission should include the shader files, Makefiles, and all *.h and *.cpp files in all subfolders. Also include the compiled executable.
+The safest approach is to upload the entire homework folder. You can cut some space by not uploading the compiled object files (*.obj on Windows, *.o on Linux/Mac) and other intermediate files generated by the compiler such as *.pch files and similar.
+After submission, please verify that your zip file has been
+successfully uploaded.
+You may submit as many times as you like.
+If you submit the assignment
+multiple times, we will grade your LAST submission only.
+Your submission time is the time of your LAST submission; if
+this time is after the deadline, late policy will apply to it.
+</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Tips</h2>	
+<p style="font-family: helvetica,arial,sans-serif;"></p>
+<ul style="font-family: helvetica,arial,sans-serif;">
+    <li>Make sure the starter code works on your machine.</li>
+    <li>Do not mix up modelview and projection matrices.</li>
+    <li>The OpenGLMatrix::Rotate and OpenGLMatrix::Perspective routines take the input angle <b>in degrees</b>.</li>
+    <li>Finish your program completely before worrying about the animation.</li>
+    <li>You should use a separate VAO and VBO to render points, lines and triangles.</li>
+    <li>To further optimize your program (extra credit), you can use GL_TRIANGLE_STRIP.</li>
+    <li> Recent Mac OS X versions do not correctly trigger GLUT_ACTIVE_CTRL and GLUT_ACTIVE_CTRL when you Ctrl + mouse click or Alt + mouse click. If that is the case on your computer, you can change the key binding into whatever you want (please describe this in the readme file). </li> 
+    <li>Don't try to do this at the last minute. This assignment is
+        supposed to be fun and relatively easy, but time pressure has a way
+        of ruining that notion.</li>
+    <li>For the OpenGLMatrix::Perspective function call, 
+        the near and far values for clipping 
+        plane have to be <i>positive</i>. You will see weird problems if they 
+        are zero or negative.</li>
+    <li>Don't over-stretch the z-buffer. It has only finite precision. A good 
+        call to setup perspective is:
+        <pre>    matrix->Perspective(fovy, aspect, 0.01, 1000.0);
+        </pre>
+        A bad call would be:
+        <pre>    matrix->Perspective(fovy, aspect, 0.0001, 100000.0);
+        </pre>
+        or even worse:
+        <pre>    matrix->Perspective(fovy, aspect, 0.0, 100000.0);
+        </pre>
+        In the last two examples, the problem is that the ratio between the 
+        distance of the far clipping plane (=last parameter to Perspective),
+        and the distance of the near clipping plane (=third parameter to Perspective) 
+        is way too large. Since the z-buffer has only finite precision (only a finite 
+        number of bits to store the z-value), it cannot represent such a large range. 
+        OpenGL will not warn you of this. Instead, you will get all sorts of strange 
+        artifacts on the screen and your scene will look nothing like what you 
+        intended it to be.
+  </li>
+  <li><h3 style="font-family: helvetica,arial,sans-serif;"><small>On JPEG
+      Types: <span style="font-weight: normal;">The ImageIO library supports JPEG images
+      with one, three, or four bytes per pixel (i.e. ImageIO::getBytesPerPixel 
+      can be 1,3, or 4). In other words, 
+      a single pixel may have either one, three, or four bytes for its intensity values. 
+      All JPEG images given in this assignments have one byte per pixel, and you don't 
+      need to worry about images with three or four bitplanes. If you have assumed one 
+      byte per pixel and happen to give a three- or four-bitplane JPEG file to your
+      program, you will get incorrect results, at best. For your information, to convert 
+      images from RGB (ImageIO::getBytesPerPixel == 3) to grayscale (ImageIO::getBytesPerPixel == 1) 
+      in Windows or Mac, you can use 
+      Photoshop (<a href="photoShop_grayscale.jpg">Image->Mode->Grayscale</a>). 
+      On all platforms, you can use the free GIMP software 
+      (<a href="ubuntu_grayscale.jpg">Image->Mode->Grayscale</a>).
+      </span></small></h3>
+  </li>	
+</ul>
+	
+<p style="font-family: helvetica,arial,sans-serif;"></p>	
+<h2 style="font-family: helvetica,arial,sans-serif;">Extras</h2>
+<p style="font-family: helvetica,arial,sans-serif;">You may choose to
+implement any combination of the following for extra credit. </p>
+<ul style="font-family: helvetica,arial,sans-serif;">
+    <li>Write a custom shader to further enhance the rendering. For example, you can 
+        experiment with material and lighting properties.</li> 
+    <li>Use element arrays and glDrawElements.</li>
+    <li>Support color (ImageIO::getBytesPerPixel == 3) in input images.</li>
+    <li>Render wireframe on top of solid triangles (use glPolygonOffset to avoid z-buffer fighting).</li>
+    <li>Color the vertices based on color values taken from another image of equal size. 
+        However, your code should still also support the height-based coloring as per the core requirements.</li>
+    <li>Texturemap the surface with an arbitrary image.</li> 
+    <li>When using key "4", color the surface using the <a href="jetColorMap.cpp">JetColorMap</a> function, in the vertex shader. Speficially, change the grayscale color x to JetColorMap(x).</li>
+    <li>We will also take into consideration other creative contributions.</li>
+</ul>
+	
+<i><p style="font-family: helvetica,arial,sans-serif;">Please note that the 
+amount of extra credit awarded will not exceed 10% of the assignment's total 
+value.</p></i>
+	
+
+<h2 style="font-family: helvetica,arial,sans-serif;">Examples</h2>
+	
+<p style="font-family: helvetica,arial,sans-serif;"> 	
+
+<table width="100%" border="5">
+<tr>
+  <td width="50%" align="center">
+  <h3>Input (source image)</h3>
+  </td>
+  <td width="50%" align="center">
+  <h3>Output (height field), key "3" (triangles)</h3>
+  </td>
+  <td width="50%" align="center">
+  <h3>Output (height field), key "4" (smoothened triangles)</h3>
+  </td>
+</tr>
+<tr>
+  <td width="50%" align="center"><img src="spiral.jpg"></td>
+  <td width="50%" align="center"><img src="spiralResult.jpg" width=600></td>
+  <td width="50%" align="center"><img src="spiral-mode4.jpg" width=600></td>
+</tr>
+</table>
+
+<table width="100%" border="5">
+<tr>
+  <td width="50%" align="center">
+  <h3>Key "3" (triangles)</h3>
+  </td>
+  <td width="50%" align="center">
+  <h3>Key "4" (smoothened triangles)</h3>
+  </td>
+</tr>
+<tr>
+  <td width="50%" align="center"><img src="triangle-unsmoothed.jpg" width=600></td>
+  <td width="50%" align="center"><img src="triangle-smoothed.jpg" width=600></td>
+</tr>
+</table>
+
+<table width="100%" border=5>
+<tr>
+  <td colspan=2 width="100%" align="center">
+  <h3>More inputs (real-world data):</h3>
+  </td>
+</tr>
+
+<tr>
+<td colspan=2>
+<br/>
+ <table border=0 width="100%" align=center>
+ <tr>
+
+ <td colspan=1 align="center"><img src="SantaMonicaMountains-256.jpg"><br/>
+   <a href="SantaMonicaMountains-128.jpg">[128]</a>
+   <a href="SantaMonicaMountains-256.jpg">[256]</a> 
+   <a href="SantaMonicaMountains-512.jpg">[512]</a> 
+   <a href="SantaMonicaMountains-768.jpg">[768]</a><p/> 
+ <b>Santa Monica Mountains</b><br/>
+ Min elevation: 0m / 0ft<br/>
+ Max elevation: 638m / 2093.17ft<br/>
+ Image size: 15.9km x 15.9km / 9.8miles x 9.8miles
+ </td>
+
+ <td colspan=1 align="center"><img src="GrandTeton-256.jpg"><br/>
+   <a href="GrandTeton-128.jpg">[128]</a>
+   <a href="GrandTeton-256.jpg">[256]</a> 
+   <a href="GrandTeton-512.jpg">[512]</a> 
+   <a href="GrandTeton-768.jpg">[768]</a><p/> 
+ <b>Grand Teton National Park</b><br/>
+ Min elevation: 1936m / 6351.71ft<br/>
+ Max elevation: 4200m / 13779.52ft<br/>
+ Image size: 27.8km x 27.8km / 17.2miles x 17.2miles
+ </td>
+
+ <td colspan=1 align="center"><img src="OhioPyle-256.jpg"><br/>
+   <a href="OhioPyle-128.jpg">[128]</a>
+   <a href="OhioPyle-256.jpg">[256]</a> 
+   <a href="OhioPyle-512.jpg">[512]</a> 
+   <a href="OhioPyle-768.jpg">[768]</a><p/>
+ <b>Ohiopyle State Park</b><br/>
+ Min elevation: 326m / 1070ft<br/>
+ Max elevation: 712m / 2336ft<br/>
+ Image size: 7.1km x 7.1km / 4.4miles x 4.4miles
+ </td>
+
+ <td colspan=1 align="center"><img src="USA-Locations.jpg"><p/>Data available from U.S. Geological Survey, Earth Resources<br/>
+  Observation and Science (EROS) Center, Sioux Falls, SD.</td>
+ </tr>
+
+ <tr>
+
+ <td colspan=1 align="center"><img src="Oahu-256.jpg"><br/>
+   <a href="Oahu-128.jpg">[128]</a>
+   <a href="Oahu-256.jpg">[256]</a>
+   <a href="Oahu-512.jpg">[512]</a>
+   <a href="Oahu-1024.jpg">[1024]</a><p/>
+ <b>Island of Oahu (Hawaii)</b><br/>
+ Min elevation: 0m / 0ft<br/>
+ Max elevation: 1227m / 4025ft<br/>
+ Image size: 72km x 72km / 45miles x 45miles
+ </td>
+
+ <td colspan=1 align="center"><img src="Dalmatia-256.jpg"><br/>
+   <a href="Dalmatia-128.jpg">[128]</a>
+   <a href="Dalmatia-256.jpg">[256]</a>
+   <a href="Dalmatia-512.jpg">[512]</a>
+   <a href="Dalmatia-1024.jpg">[1024]</a><p/>
+ <b>Dalmatia (Croatia)</b><br/>
+ Min elevation: 0m / 0ft<br/>
+ Max elevation: 2350m / 7710ft<br/>
+ Image size: 75km x 75km / 46miles x 46miles
+ </td>  
+
+ <td colspan=1 align="center"><img src="Exuma-256.jpg"><br/>
+   <a href="Exuma-128.jpg">[128]</a>
+   <a href="Exuma-256.jpg">[256]</a>
+   <a href="Exuma-512.jpg">[512]</a>
+   <a href="Exuma-1024.jpg">[1024]</a><p/>
+ <b>Grand Exuma Island (Bahamas)</b><br/>
+ Min elevation: 0m / 0ft<br/>
+ Max elevation: 39m / 128ft<br/>
+ Image size: 48km x 48km / 30miles x 30miles
+ </td>  
+
+ </tr>
+
+ </table>
+<br/>
+</td>
+</tr>
+</tbody>
+
+
+</table>
+	</p>
+
+<h2 style="font-family: helvetica,arial,sans-serif;">I am a bit overwhelmed. What task should I start with first?</h2> 
+
+There are lots of things you need to get done in the homework. Here are two places you can start at:
+
+<ol>
+  <li><b>Modelview matrix.</b>
+  The starter code already contains code that records the user's mouse interaction and stores it in three global arrays: terrainRotate, terrainTranslate, and terrainScale. You need to convert the values in these global arrays into actual changes to your modelview matrix! Write this code into your displayFunc(), right after where the starter code already contains the LookAt function.</li>
+  <li><b>Read image and create point array.</b>
+  The starter code reads in an image in initScene(), but it does not actually allocate any memory for vertices and does not create VBOs for them. Start by creating a float\[\] array of size 3\*numPoints with the vertex coordinates of just the points (visualization mode 1), create a VBO for them, and make sure the global variables are updated appropriately to draw your point cloud heightfield instead of the starter triangle (make sure to change the glDrawArrays command to points!)
+  <ul><li>You will have to create multiple vertex coordinate arrays and multiple VBOs and multiple global numVertices variables for points, lines, and triangles.</li>
+    <li>Try to just get the points working first (mode "1") before you introduce additional complexity by trying to do lines / triangles.</li></ul></li>
+</ol>
+
+<noscript>
+</body>
+<!-- Mirrored from viterbi-web.usc.edu/~jbarbic/cs420-s24/assign1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jul 2024 04:21:03 GMT -->
+</html>
